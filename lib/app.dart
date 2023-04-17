@@ -1,19 +1,43 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:nutrition_tracker/screens/analytics_screen.dart';
 import 'package:nutrition_tracker/screens/home_screen.dart';
+import 'package:nutrition_tracker/screens/profile_screen.dart';
+
+List<Widget> screens = const [
+  HomeScreen(),
+  AnalyticsScreen(),
+  ProfileScreen(),
+];
 
 class App extends StatelessWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+    return CupertinoApp(
+      title: 'Nutrition Tracker',
+      theme: const CupertinoThemeData(
+          scaffoldBackgroundColor: Color(0xFF292929),
+          brightness: Brightness.dark),
+      home: _bottomTabNavigator(context),
     );
   }
 }
+
+Widget _bottomTabNavigator(BuildContext context) => CupertinoTabScaffold(
+    tabBar: CupertinoTabBar(
+      iconSize: 24,
+      activeColor: Color(0xFF39828D),
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.square_list),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.chart_pie),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.person),
+        ),
+      ],
+    ),
+    tabBuilder: (context, index) => screens[index]);

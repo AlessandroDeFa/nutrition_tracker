@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:nutrition_tracker/screens/analytics_screen.dart';
 import 'package:nutrition_tracker/screens/home_screen.dart';
 import 'package:nutrition_tracker/screens/profile_screen.dart';
+import 'package:nutrition_tracker/utils/custom_colors.dart';
 
 List<Widget> screens = const [
   HomeScreen(),
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
     return CupertinoApp(
       title: 'Nutrition Tracker',
       theme: const CupertinoThemeData(
-          scaffoldBackgroundColor: Color(0xFF292929),
+          scaffoldBackgroundColor: CustomColors.scaffoldBackgroundColor,
           brightness: Brightness.dark),
       home: _bottomTabNavigator(context),
     );
@@ -27,16 +28,19 @@ class App extends StatelessWidget {
 Widget _bottomTabNavigator(BuildContext context) => CupertinoTabScaffold(
     tabBar: CupertinoTabBar(
       iconSize: 24,
-      activeColor: Color(0xFF39828D),
+      activeColor: CustomColors.primaryColor,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.square_list),
+          icon: Icon(CupertinoIcons.square_favorites),
+          activeIcon: Icon(CupertinoIcons.square_favorites_fill),
         ),
         BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.chart_pie),
+          activeIcon: Icon(CupertinoIcons.chart_pie_fill),
         ),
         BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.person),
+          activeIcon: Icon(CupertinoIcons.person_solid),
         ),
       ],
     ),

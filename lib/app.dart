@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/screens/analytics_screen.dart';
 import 'package:nutrition_tracker/screens/home_screen.dart';
 import 'package:nutrition_tracker/screens/profile_screen.dart';

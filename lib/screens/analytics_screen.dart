@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nutrition_tracker/screens/sub_screens/settings_screen.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -15,19 +16,25 @@ class AnalyticsScreen extends StatelessWidget {
     };
 
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        border: Border(
+      navigationBar: CupertinoNavigationBar(
+        border: const Border(
             bottom: BorderSide(
           width: 1,
           color: CustomColors.grayColor,
         )),
         backgroundColor: Colors.transparent,
         middle: Text("Analytics"),
-        trailing: Icon(
-          CupertinoIcons.settings,
-          size: 24,
-          color: CustomColors.primaryColor,
-        ),
+        trailing: CupertinoButton(
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.all(0.0),
+            child: const Icon(
+              CupertinoIcons.settings,
+              size: 24,
+              color: CustomColors.primaryColor,
+            ),
+            onPressed: () {
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => const SettingsScreen() ));
+            }),
       ),
       child: ListView(
         children: [

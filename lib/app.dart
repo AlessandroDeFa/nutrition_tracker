@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nutrition_tracker/cubits/switch_theme/switch_theme_cubit.dart';
 import 'package:nutrition_tracker/screens/analytics_screen.dart';
 import 'package:nutrition_tracker/screens/home_screen.dart';
 import 'package:nutrition_tracker/screens/profile_screen.dart';
@@ -16,12 +18,17 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: 'Nutrition Tracker',
-      theme: const CupertinoThemeData(
-          scaffoldBackgroundColor: CustomColors.scaffoldBackgroundColor,
-          brightness: Brightness.dark),
-      home: _bottomTabNavigator(context),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SwitchThemeCubit>(create: (_) => SwitchThemeCubit()),
+      ],
+      child: CupertinoApp(
+        title: 'Nutrition Tracker',
+        theme: const CupertinoThemeData(
+            scaffoldBackgroundColor: CustomColors.scaffoldBackgroundColor,
+            brightness: Brightness.dark),
+        home: _bottomTabNavigator(context),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nutrition_tracker/screens/sub_screens/settings_screen.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
+import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class AnalyticsScreen extends StatelessWidget {
@@ -16,26 +16,7 @@ class AnalyticsScreen extends StatelessWidget {
     };
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        border: const Border(
-            bottom: BorderSide(
-          width: 1,
-          color: CustomColors.grayColor,
-        )),
-        backgroundColor: Colors.transparent,
-        middle: Text("Analytics"),
-        trailing: CupertinoButton(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(0.0),
-            child: const Icon(
-              CupertinoIcons.settings,
-              size: 24,
-              color: CustomColors.primaryColor,
-            ),
-            onPressed: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const SettingsScreen() ));
-            }),
-      ),
+      navigationBar: const CustomNavigationBar(navigationBar: CupertinoNavigationBar(), title: 'Analytics',),
       child: ListView(
         children: [
           _dailyCalories(context),
@@ -86,14 +67,14 @@ class AnalyticsScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: PieChart(
-                  chartValuesOptions: ChartValuesOptions(
+                  chartValuesOptions: const ChartValuesOptions(
                       showChartValueBackground: false,
                       chartValueStyle:
                           TextStyle(color: CustomColors.textColor)),
                   chartLegendSpacing: 20,
                   dataMap: dataMap,
                   chartRadius: MediaQuery.of(context).size.width * 0.4,
-                  legendOptions: LegendOptions(
+                  legendOptions: const LegendOptions(
                     showLegendsInRow: true,
                     legendPosition: LegendPosition.bottom,
                   ),

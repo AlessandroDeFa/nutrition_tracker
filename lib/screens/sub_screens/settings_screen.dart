@@ -11,10 +11,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        border: const Border(
+        border:  Border(
             bottom: BorderSide(
               width: 1,
-              color: CustomColors.grayColor,
+              color: CupertinoTheme.of(context).primaryContrastingColor,
             )),
         backgroundColor: Colors.transparent,
         leading: CupertinoButton(

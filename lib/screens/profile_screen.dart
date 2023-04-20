@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nutrition_tracker/screens/sub_screens/settings_screen.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
+import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -9,26 +9,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        border: const Border(
-            bottom: BorderSide(
-          width: 1,
-          color: CustomColors.grayColor,
-        )),
-        backgroundColor: Colors.transparent,
-        middle: const Text("Profilo"),
-        trailing: CupertinoButton(
-          alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(0.0),
-            child: const Icon(
-              CupertinoIcons.settings,
-              size: 24,
-              color: CustomColors.primaryColor,
-            ),
-            onPressed: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const SettingsScreen() ));
-            }),
-      ),
+      navigationBar: const CustomNavigationBar(navigationBar: CupertinoNavigationBar(), title: 'Profilo',),
       child: ListView(
         children: [
           _listTileName(context),

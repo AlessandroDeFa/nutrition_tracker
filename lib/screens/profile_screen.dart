@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nutrition_tracker/screens/sub_screens/edit_profile_info.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
 import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
 
@@ -8,19 +9,27 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void editProfileScreen() {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+              builder: (context) => const EditProfileInfo()));
+    }
+
     return CupertinoPageScaffold(
       navigationBar: const CustomNavigationBar(navigationBar: CupertinoNavigationBar(), title: 'Profilo',),
       child: ListView(
         children: [
-          _listTileName(context),
-          _listTileGeneralInfo(context),
+          _listTileName(context, editProfileScreen),
+          _listTileGeneralInfo(context, editProfileScreen),
           _listTileResults(context),
         ],
       ),
     );
   }
 
-  Widget _listTileName(BuildContext context) =>
+  Widget _listTileName(BuildContext context, editProfileScreen) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -36,12 +45,16 @@ class ProfileScreen extends StatelessWidget {
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
-            onTap: () {},
+            onTap: () {
+              editProfileScreen();
+  }
+
+            ,
           ),
         ],
       );
 
-  Widget _listTileGeneralInfo(BuildContext context) =>
+  Widget _listTileGeneralInfo(BuildContext context, editProfileScreen) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -56,7 +69,9 @@ class ProfileScreen extends StatelessWidget {
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
-            onTap: () {},
+            onTap: () {
+              editProfileScreen();
+            },
           ),
           CupertinoListTile(
             title: const Text('Peso corporeo (kg)'),
@@ -65,7 +80,9 @@ class ProfileScreen extends StatelessWidget {
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
-            onTap: () {},
+            onTap: () {
+              editProfileScreen();
+            },
           ),
           CupertinoListTile(
             title: const Text('Genere'),
@@ -74,7 +91,9 @@ class ProfileScreen extends StatelessWidget {
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
-            onTap: () {},
+            onTap: () {
+              editProfileScreen();
+            },
           ),
           CupertinoListTile(
             title: const Text('Età'),
@@ -83,7 +102,20 @@ class ProfileScreen extends StatelessWidget {
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
-            onTap: () {},
+            onTap: () {
+              editProfileScreen();
+            },
+          ),
+          CupertinoListTile(
+            title: const Text('Attività'),
+            additionalInfo: Text('Moderato'),
+            trailing: const Icon(
+              CupertinoIcons.chevron_forward,
+              color: CustomColors.grayColor,
+            ),
+            onTap: () {
+              editProfileScreen();
+            },
           ),
         ],
       );
@@ -113,10 +145,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             title: const Text('Metabolismo basale'),
             subtitle: Text('1735 kcal', style: TextStyle(fontSize: 16)),
-            trailing: const Icon(
-              CupertinoIcons.chevron_forward,
-              color: CustomColors.grayColor,
-            ),
+
           ),
           CupertinoListTile(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -138,10 +167,7 @@ class ProfileScreen extends StatelessWidget {
               '23.57',
               style: TextStyle(fontSize: 16),
             ),
-            trailing: const Icon(
-              CupertinoIcons.chevron_forward,
-              color: CustomColors.grayColor,
-            ),
+
           ),
           CupertinoListTile(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -160,10 +186,6 @@ class ProfileScreen extends StatelessWidget {
             ),
             title: const Text('Fabbisogno idrico (ml)'),
             subtitle: Text('2500', style: TextStyle(fontSize: 16)),
-            trailing: const Icon(
-              CupertinoIcons.chevron_forward,
-              color: CustomColors.grayColor,
-            ),
           ),
         ],
       );

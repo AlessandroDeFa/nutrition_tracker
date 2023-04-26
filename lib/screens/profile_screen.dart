@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nutrition_tracker/blocs/profile_form/profile_form_bloc.dart';
+import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/screens/sub_screens/edit_profile_info.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
 import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
@@ -9,7 +12,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void editProfileScreen() {
       Navigator.push(
           context,
@@ -18,18 +20,23 @@ class ProfileScreen extends StatelessWidget {
     }
 
     return CupertinoPageScaffold(
-      navigationBar: const CustomNavigationBar(navigationBar: CupertinoNavigationBar(), title: 'Profilo',),
-      child: ListView(
-        children: [
-          _listTileName(context, editProfileScreen),
-          _listTileGeneralInfo(context, editProfileScreen),
-          _listTileResults(context),
-        ],
+      navigationBar: const CustomNavigationBar(
+        navigationBar: CupertinoNavigationBar(), title: 'Profilo',),
+      child: BlocBuilder<SubmitFormBloc, SubmitFormState>(
+        builder: (context, state) {
+          return ListView(
+            children: [
+              _listTileName(context, editProfileScreen, state),
+              _listTileGeneralInfo(context, editProfileScreen, state),
+              _listTileResults(context,state),
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget _listTileName(BuildContext context, editProfileScreen) =>
+  Widget _listTileName(BuildContext context, editProfileScreen, SubmitFormState state) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -40,21 +47,20 @@ class ProfileScreen extends StatelessWidget {
         ),
         children: [
           CupertinoListTile(
-            title: Text('Nome'),
-            trailing: Icon(
+            title: Text(state.name != null && state.name != '' ? state.name! : 'Nome'),
+            trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
             onTap: () {
               editProfileScreen();
-  }
-
+            }
             ,
           ),
         ],
       );
 
-  Widget _listTileGeneralInfo(BuildContext context, editProfileScreen) =>
+  Widget _listTileGeneralInfo(BuildContext context, editProfileScreen, SubmitFormState state) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -64,8 +70,8 @@ class ProfileScreen extends StatelessWidget {
         children: [
           CupertinoListTile(
             title: const Text('Altezza (centimetro)'),
-            additionalInfo: Text('175'),
-            trailing: Icon(
+            additionalInfo: Text(state.height != null ? state.height.toString() :  '-'),
+            trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
@@ -75,8 +81,8 @@ class ProfileScreen extends StatelessWidget {
           ),
           CupertinoListTile(
             title: const Text('Peso corporeo (kg)'),
-            additionalInfo: Text('72'),
-            trailing: Icon(
+            additionalInfo: Text(state.weight != null ? state.weight.toString() : '-'),
+            trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
             ),
@@ -86,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           CupertinoListTile(
             title: const Text('Genere'),
-            additionalInfo: Text('Maschio'),
+            additionalInfo: Text(state.type ?? '-'),
             trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
@@ -97,7 +103,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           CupertinoListTile(
             title: const Text('Età'),
-            additionalInfo: Text('21'),
+            additionalInfo: Text(state.age != null ? state.age.toString() : '-'),
             trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
@@ -108,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           CupertinoListTile(
             title: const Text('Attività'),
-            additionalInfo: Text('Moderato'),
+            additionalInfo: Text(state.activity ?? '-'),
             trailing: const Icon(
               CupertinoIcons.chevron_forward,
               color: CustomColors.grayColor,
@@ -120,7 +126,7 @@ class ProfileScreen extends StatelessWidget {
         ],
       );
 
-  Widget _listTileResults(BuildContext context) =>
+  Widget _listTileResults(BuildContext context, SubmitFormState state) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -144,7 +150,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Metabolismo basale'),
-            subtitle: Text('1735 kcal', style: TextStyle(fontSize: 16)),
+            subtitle: Text(state.bmr != null ? '${state.bmr} kcal' : '-', style: TextStyle(fontSize: 16)),
 
           ),
           CupertinoListTile(
@@ -163,9 +169,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Indice di massa corporea'),
-            subtitle: Text(
-              '23.57',
-              style: TextStyle(fontSize: 16),
+            subtitle: Text(state.imc != null ? state.imc! : '-',
+              style: const TextStyle(fontSize: 16),
             ),
 
           ),
@@ -185,8 +190,29 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             title: const Text('Fabbisogno idrico (ml)'),
-            subtitle: Text('2500', style: TextStyle(fontSize: 16)),
+            subtitle: Text(state.waterNeeds != null ? '${state.waterNeeds}' : '-', style: const TextStyle(fontSize: 16)),
+          ),
+          CupertinoListTile(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            leading: Container(
+              width: double.infinity,
+              height: double.infinity,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: CupertinoColors.systemRed,
+              ),
+              child: const Icon(
+                Icons.whatshot,
+                color: CupertinoColors.white,
+              ),
+            ),
+            title: const Text('Fabbisogno calorico (TDEE)'),
+            subtitle: Text(state.waterNeeds != null ? '${state.tdee} kcal' : '-', style: const TextStyle(fontSize: 16)),
           ),
         ],
       );
 }
+
+// CRAERE LA FUNZIONE ANCHE PER IL TYPE FEMMINA
+

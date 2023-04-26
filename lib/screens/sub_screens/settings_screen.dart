@@ -13,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         border:  Border(
             bottom: BorderSide(
-              width: 1,
+              width: .5,
               color: CupertinoTheme.of(context).primaryContrastingColor,
             )),
         backgroundColor: Colors.transparent,

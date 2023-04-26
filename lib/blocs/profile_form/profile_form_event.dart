@@ -3,6 +3,7 @@ part of 'profile_form_bloc.dart';
 abstract class ProfileFormEvent extends Equatable {
   const ProfileFormEvent();
 }
+
 // Change type event
 class ChangedType extends ProfileFormEvent {
   final String type;
@@ -63,7 +64,23 @@ class ChangedAge extends ProfileFormEvent {
   List<Object?> get props => [age];
 }
 
-class ResetAllFields extends ProfileFormEvent {
+
+class InitialValues extends ProfileFormEvent {
+  final String? type;
+  final String? activity;
+  final String? name;
+  final double? weight;
+  final int? height;
+  final int? age;
+
+  const InitialValues(
+      {required this.type,
+      required this.activity,
+      required this.name,
+      required this.weight,
+      required this.height,
+      required this.age});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [type, activity, name, weight, height, age];
 }

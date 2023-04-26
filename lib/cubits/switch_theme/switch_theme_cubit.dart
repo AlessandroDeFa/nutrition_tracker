@@ -5,7 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'switch_theme_state.dart';
 
 class SwitchThemeCubit extends HydratedCubit<SwitchThemeState> {
-  SwitchThemeCubit() : super(const SwitchThemeState(darkMode: false),);
+  SwitchThemeCubit() : super(const SwitchThemeState(darkMode: true),);
 
   void switchTheme() => emit(SwitchThemeState(darkMode: !state.darkMode));
 

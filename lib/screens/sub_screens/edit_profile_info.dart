@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nutrition_tracker/blocs/profile_form/profile_form_bloc.dart';
+import 'package:nutrition_tracker/blocs/profile_form/validate_form/profile_form_bloc.dart';
 import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
 
@@ -74,7 +74,7 @@ class _EditProfileInfoState extends State<EditProfileInfo> {
                             weight: state.weight,
                             height: state.height,
                             age: state.age));
-                        // context.read<SubmitFormBloc>().calculateTDEE();
+
                         Navigator.pop(context);
 
                       },

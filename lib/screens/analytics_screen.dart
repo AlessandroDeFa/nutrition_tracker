@@ -1,26 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nutrition_tracker/blocs/analytics_bloc/validate_analytics_form/analytics_form_bloc.dart';
+import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
 import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+Map<String, double> dataMap = {
+  "Carboidrati": 50,
+  "Proteine": 35,
+  "Grassi": 25,
+};
 
 class AnalyticsScreen extends StatelessWidget {
   const AnalyticsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Map<String, double> dataMap = {
-      "Carboidrati": 5,
-      "Proteine": 3,
-      "Grassi": 2,
-    };
+
 
     return CupertinoPageScaffold(
-      navigationBar: const CustomNavigationBar(navigationBar: CupertinoNavigationBar(), title: 'Analytics',),
+      navigationBar: const CustomNavigationBar(
+        navigationBar: CupertinoNavigationBar(),
+        title: 'Analytics',
+      ),
       child: ListView(
         children: [
           _dailyCalories(context),
-          _pieChart(context, dataMap),
+          BlocBuilder<SubmitFormBloc, SubmitFormState>(
+            builder: (context, state) {
+              return state.tdee != null ? _btnUseTdee(context) : Container();
+            },
+          ),
+          BlocBuilder<AnalyticsFormBloc, AnalyticsFormState>(
+            builder: (context, state) {
+              return _pieChart(context, state);
+            },
+          ),
         ],
       ),
     );
@@ -39,9 +56,13 @@ class AnalyticsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               width: double.infinity,
               alignment: Alignment.center,
-              child: Text(
-                "1900 kcal",
-                style: TextStyle(fontSize: 25),
+              child: BlocBuilder<AnalyticsFormBloc, AnalyticsFormState>(
+                builder: (context, state) {
+                  return Text(
+                    state.tdee != null ? "${state.tdee} kcal" : 'Nessun dato',
+                    style: const TextStyle(fontSize: 25),
+                  );
+                },
               ),
             ),
             trailing: const Icon(
@@ -53,7 +74,32 @@ class AnalyticsScreen extends StatelessWidget {
         ],
       );
 
-  Widget _pieChart(BuildContext context, dataMap) =>
+  Widget _btnUseTdee(BuildContext context) => CupertinoListSection.insetGrouped(
+        backgroundColor: Colors.transparent,
+        children: [
+          CupertinoListTile(
+            padding: EdgeInsets.zero,
+            title: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text(
+                  'Usa il TDEE calcolato',
+                  style: TextStyle(
+                      color: CupertinoTheme.of(context).primaryColor,
+                      fontSize: 16),
+                )),
+            onTap: () {
+              context.read<AnalyticsFormBloc>().add(ChangeTdeeValueFromProfile(
+                  tdee: context.read<SubmitFormBloc>().state.tdee,
+                  percentageCarbs: 45.0,
+                  percentagePro: 30.0,
+                  percentageFat: 25.0));
+            },
+          ),
+        ],
+      );
+
+  Widget _pieChart(BuildContext context, AnalyticsFormState state) =>
       CupertinoListSection.insetGrouped(
         backgroundColor: Colors.transparent,
         header: const Padding(
@@ -72,7 +118,7 @@ class AnalyticsScreen extends StatelessWidget {
                       chartValueStyle:
                           TextStyle(color: CustomColors.textColor)),
                   chartLegendSpacing: 20,
-                  dataMap: dataMap,
+                  dataMap: state.dataChart ?? dataMap,
                   chartRadius: MediaQuery.of(context).size.width * 0.4,
                   legendOptions: const LegendOptions(
                     showLegendsInRow: true,
@@ -90,23 +136,27 @@ class AnalyticsScreen extends StatelessWidget {
         ],
       );
 
-  Widget _legendsValuesPieChart(BuildContext context) => const Padding(
-    padding: EdgeInsets.symmetric(vertical: 10),
-    child: Row(
+  Widget _legendsValuesPieChart(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Carboidrati",
                     style: TextStyle(color: CustomColors.pinkPieChart),
                   ),
-                  Text(
-                    '190g',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: CustomColors.pinkPieChart),
+                  BlocBuilder<AnalyticsFormBloc, AnalyticsFormState>(
+                    builder: (context, state) {
+                      return Text(
+                        state.carbs != null ? '${state.carbs} g' : '-',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: CustomColors.pinkPieChart),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -114,28 +164,37 @@ class AnalyticsScreen extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text("Proteine",
+                  const Text("Proteine",
                       style: TextStyle(color: CustomColors.bluePieChart)),
-                  Text('147 g',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColors.bluePieChart)),
+                  BlocBuilder<AnalyticsFormBloc, AnalyticsFormState>(
+                    builder: (context, state) {
+                      return Text(
+                          state.protein != null ? '${state.protein} g' : '-',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: CustomColors.bluePieChart));
+                    },
+                  ),
                 ],
               ),
             ),
             Expanded(
               child: Column(
                 children: [
-                  Text("Grassi",
+                  const Text("Grassi",
                       style: TextStyle(color: CustomColors.orangePieChart)),
-                  Text('61 g',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: CustomColors.orangePieChart)),
+                  BlocBuilder<AnalyticsFormBloc, AnalyticsFormState>(
+                    builder: (context, state) {
+                      return Text(state.fat != null ? '${state.fat} g' : '-',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: CustomColors.orangePieChart));
+                    },
+                  ),
                 ],
               ),
             ),
           ],
         ),
-  );
+      );
 }

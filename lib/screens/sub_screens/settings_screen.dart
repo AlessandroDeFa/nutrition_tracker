@@ -11,10 +11,12 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        border:  Border(
+        border: Border(
             bottom: BorderSide(
               width: .5,
-              color: CupertinoTheme.of(context).primaryContrastingColor,
+              color: CupertinoTheme
+                  .of(context)
+                  .primaryContrastingColor,
             )),
         backgroundColor: Colors.transparent,
         leading: CupertinoButton(
@@ -49,28 +51,32 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _themeMode(BuildContext context) =>
-      BlocBuilder<SwitchThemeCubit, SwitchThemeState>(
-        builder: (context, state) {
-          return CupertinoListSection.insetGrouped(
-            backgroundColor: Colors.transparent,
-            header: const Padding(
-              padding: EdgeInsets.only(
-                bottom: 8.0,
-              ),
-              child: Text('Impostazioni del tema'),
-            ),
-            children: [
-              CupertinoListTile(
-                title: Text("Modalità scura"),
+      CupertinoListSection.insetGrouped(
+        backgroundColor: Colors.transparent,
+        header: const Padding(
+          padding: EdgeInsets.only(
+            bottom: 8.0,
+          ),
+          child: Text('Impostazioni del tema'),
+        ),
+        children: [
+          BlocBuilder<SwitchThemeCubit, SwitchThemeState>(
+            builder: (context, state) {
+              return CupertinoListTile(
+                title: const Text("Modalità scura"),
                 trailing: CupertinoSwitch(
                   value: state.darkMode,
                   onChanged: (bool value) {
                     context.read<SwitchThemeCubit>().switchTheme();
                   },
                 ),
-              )
-            ],
-          );
-        },
+              );
+            },
+          ),
+          const CupertinoListTile(
+            title: Text("Formula"),
+            trailing: Text("Mifflin-St Jeor"),
+          )
+        ],
       );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nutrition_tracker/blocs/profile_form/profile_form_bloc.dart';
+import 'package:nutrition_tracker/blocs/analytics_bloc/validate_analytics_form/analytics_form_bloc.dart';
+import 'package:nutrition_tracker/blocs/profile_form/validate_form/profile_form_bloc.dart';
 import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/cubits/switch_theme/switch_theme_cubit.dart';
 import 'package:nutrition_tracker/screens/analytics_screen.dart';
@@ -26,7 +27,10 @@ class App extends StatelessWidget {
         BlocProvider<SwitchThemeCubit>(create: (_) => SwitchThemeCubit()),
         // Profile Form Bloc
         BlocProvider<ProfileFormBloc>(create: (_) => ProfileFormBloc()),
+        // Submit Profile Form Bloc
         BlocProvider<SubmitFormBloc>(create: (_)=> SubmitFormBloc()),
+        // Analytics Form Bloc
+        BlocProvider<AnalyticsFormBloc>(create: (_) => AnalyticsFormBloc()),
       ],
       child: BlocBuilder<SwitchThemeCubit, SwitchThemeState>(
         builder: (context, state) {

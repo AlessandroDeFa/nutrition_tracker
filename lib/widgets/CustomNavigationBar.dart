@@ -17,7 +17,7 @@ class CustomNavigationBar extends StatelessWidget implements ObstructingPreferre
             width: .5,
             color: CupertinoTheme.of(context).primaryContrastingColor,
           )),
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       middle: Text(title),
       trailing: CupertinoButton(
           alignment: Alignment.centerRight,

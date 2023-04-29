@@ -7,12 +7,25 @@ abstract class SubmitAnalyticsFormEvent extends Equatable {
 class ChangeTdeeValueFromProfile extends SubmitAnalyticsFormEvent {
   final int? tdee;
   final double? percentageCarbs;
-  final double? percentagePro;
+  final double? percentageProtein;
   final double? percentageFat;
 
-  const ChangeTdeeValueFromProfile({required this.tdee, required this.percentageCarbs, required this.percentagePro, required this.percentageFat});
+  const ChangeTdeeValueFromProfile({required this.tdee, required this.percentageCarbs, required this.percentageProtein, required this.percentageFat});
 
   @override
-  List<Object?> get props => [tdee, percentageCarbs, percentagePro, percentageFat];
+  List<Object?> get props => [tdee, percentageCarbs, percentageProtein, percentageFat];
+}
+
+class PerformSubmitAnalytics extends SubmitAnalyticsFormEvent {
+  final int? tdee;
+  final double? percentageCarbs;
+  final double? percentageProtein;
+  final double? percentageFat;
+
+  const PerformSubmitAnalytics({required this.tdee, required this.percentageCarbs, required this.percentageProtein, required this.percentageFat});
+
+  @override
+  List<Object?> get props => [tdee, percentageCarbs, percentageProtein, percentageFat];
+
 }
 

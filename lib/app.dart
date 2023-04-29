@@ -25,12 +25,13 @@ class App extends StatelessWidget {
       providers: [
         // Switch Theme Cubit
         BlocProvider<SwitchThemeCubit>(create: (_) => SwitchThemeCubit()),
+        // Submit Profile Form Bloc
+        BlocProvider<SubmitFormBloc>(create: (_) => SubmitFormBloc()),
         // Profile Form Bloc
         BlocProvider<ProfileFormBloc>(create: (_) => ProfileFormBloc()),
-        // Submit Profile Form Bloc
-        BlocProvider<SubmitFormBloc>(create: (_)=> SubmitFormBloc()),
         // Submit Analytics Form Bloc
-        BlocProvider<SubmitAnalyticsFormBloc>(create: (_) => SubmitAnalyticsFormBloc()),
+        BlocProvider<SubmitAnalyticsFormBloc>(
+            create: (_) => SubmitAnalyticsFormBloc()),
       ],
       child: BlocBuilder<SwitchThemeCubit, SwitchThemeState>(
         builder: (context, state) {
@@ -45,24 +46,23 @@ class App extends StatelessWidget {
   }
 }
 
-Widget _bottomTabNavigator(BuildContext context) =>
-    CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(
-          iconSize: 24,
-          activeColor: CustomColors.primaryColor,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.square_favorites),
-              activeIcon: Icon(CupertinoIcons.square_favorites_fill),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.chart_pie),
-              activeIcon: Icon(CupertinoIcons.chart_pie_fill),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person),
-              activeIcon: Icon(CupertinoIcons.person_solid),
-            ),
-          ],
+Widget _bottomTabNavigator(BuildContext context) => CupertinoTabScaffold(
+    tabBar: CupertinoTabBar(
+      iconSize: 24,
+      activeColor: CustomColors.primaryColor,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.square_favorites),
+          activeIcon: Icon(CupertinoIcons.square_favorites_fill),
         ),
-        tabBuilder: (context, index) => screens[index]);
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.chart_pie),
+          activeIcon: Icon(CupertinoIcons.chart_pie_fill),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.person),
+          activeIcon: Icon(CupertinoIcons.person_solid),
+        ),
+      ],
+    ),
+    tabBuilder: (context, index) => screens[index]);

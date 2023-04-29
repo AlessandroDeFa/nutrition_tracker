@@ -33,7 +33,7 @@ class SubmitAnalyticsFormBloc
       calculatePercentagesMacros(
           tdee: event.tdee,
           percentageCarbs: event.percentageCarbs,
-          percentagePro: event.percentagePro,
+          percentagePro: event.percentageProtein,
           percentageFat: event.percentageFat);
       emit(SubmitAnalyticsFormState(
           tdee: event.tdee,
@@ -44,6 +44,25 @@ class SubmitAnalyticsFormBloc
           kcalCarbs: kcalCarbs,
           kcalProtein: kcalProtein,
           kcalFat: kcalFat));
+    });
+    on<PerformSubmitAnalytics>((event, emit) {
+      calculatePercentagesMacros(
+          tdee: event.tdee,
+          percentageCarbs: event.percentageCarbs,
+          percentagePro: event.percentageProtein,
+          percentageFat: event.percentageFat);
+      emit(
+        SubmitAnalyticsFormState(
+          tdee: event.tdee,
+          carbs: carbs,
+          protein: protein,
+          fat: fat,
+          dataChart: dataChart,
+          kcalCarbs: kcalCarbs,
+          kcalProtein: kcalProtein,
+          kcalFat: kcalFat,
+        ),
+      );
     });
   }
 

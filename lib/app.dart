@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nutrition_tracker/blocs/analytics_bloc/submit_analytics_form/submit_analytics_form_bloc.dart';
 import 'package:nutrition_tracker/blocs/profile_form/validate_form/profile_form_bloc.dart';
@@ -36,6 +37,11 @@ class App extends StatelessWidget {
       child: BlocBuilder<SwitchThemeCubit, SwitchThemeState>(
         builder: (context, state) {
           return CupertinoApp(
+            localizationsDelegates: const [
+              DefaultMaterialLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate,
+              DefaultWidgetsLocalizations.delegate,
+            ],
             title: 'Nutrition Tracker',
             theme: state.darkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
             home: _bottomTabNavigator(context),

@@ -6,7 +6,7 @@ import 'package:nutrition_tracker/blocs/analytics_bloc/submit_analytics_form/sub
 import 'package:nutrition_tracker/blocs/analytics_bloc/validate_analytics_form/analytics_form_bloc.dart';
 import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
-import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
+import 'package:nutrition_tracker/widgets/custom_navigation_bar.dart';
 import 'package:nutrition_tracker/widgets/analytics_bottom_sheet.dart';
 import 'package:pie_chart/pie_chart.dart';
 

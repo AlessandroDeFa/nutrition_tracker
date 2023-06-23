@@ -5,7 +5,7 @@ import 'package:nutrition_tracker/blocs/profile_form/validate_form/profile_form_
 import 'package:nutrition_tracker/blocs/profile_form/submit_form/submit_form_bloc.dart';
 import 'package:nutrition_tracker/screens/sub_screens/edit_profile_info.dart';
 import 'package:nutrition_tracker/utils/custom_colors.dart';
-import 'package:nutrition_tracker/widgets/CustomNavigationBar.dart';
+import 'package:nutrition_tracker/widgets/custom_navigation_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);

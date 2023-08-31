@@ -1,16 +1,17 @@
 # nutrition_tracker
 
-A new Flutter project.
+##Description
 
-## Getting Started
+Introducing a calorie tracking app developed using Flutter. This application allows users to effortlessly monitor their daily caloric intake, helping them maintain a healthy lifestyle and achieve their fitness goals.
 
-This project is a starting point for a Flutter application.
+##Key Features
+Utilization of the Bloc pattern for advanced state management.
+Implementation of the provider for dependency and data management.
 
-A few resources to get you started if this is your first Flutter project:
+##Current Status
+The app is still in development.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
